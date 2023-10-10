@@ -6,7 +6,7 @@
 
 Get the latest release from https://github.com/okisooo/osumode/releases
 
-- Open "osu! Mode.exe"
+- Open "osuMode.exe"
 - You will be prompted with multiple lines, these are the paths to your files.
 - Fill in the paths.
 - Once you've done that, make sure to update them using the button at the very bottom.
