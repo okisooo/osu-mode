@@ -8,13 +8,15 @@ if sys.platform == "win32":
 executables = [Executable(
     "toggler.py",  # Replace with your script name
     base=base,
-    icon=r"C:\Users\samue\Documents\GitHub\osudrawingtoggler\icon.ico"  # Specify the path to your icon file
+    icon=r"C:\Users\samue\Documents\GitHub\osudrawingtoggler\icon.ico",  # Specify the path to your icon file
+    targetName="osu! mode switcher.exe"  # Set the desired executable name
 )]
 
 options = {
     "build_exe": {
         "includes": ["tkinter"],
         "packages": ["tkinter", "subprocess", "os", "json"],
+        "build_exe": "build_version_1"  # Change this to create a new build directory for each build
     }
 }
 
