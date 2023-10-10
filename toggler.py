@@ -2,11 +2,8 @@ import subprocess
 import tkinter as tk
 from tkinter import filedialog
 import os
-import sys
 import ctypes
-import win32con
-import win32gui
-import win32process
+import sys
 
 # Check if the script is running with administrator privileges
 def is_admin():
@@ -17,7 +14,7 @@ def is_admin():
 
 # If the script is not running with administrator privileges, relaunch it with admin rights
 if not is_admin():
-    ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, win32con.SW_SHOWNORMAL)
+    ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
 
 # Initialize the Tkinter window
 root = tk.Tk()
@@ -48,15 +45,12 @@ def enable_osu_mode():
                 subprocess.run(["taskkill", "/F", "/IM", os.path.basename(executable)], shell=True, check=True)
             except subprocess.CalledProcessError:
                 pass
-
-        # Start OpenTabletDriver daemon
-        subprocess.Popen([open_tablet_daemon_path], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, creationflags=win32con.DETACHED_PROCESS)
-
-        # Start OpenTabletDriver without elevated permissions
-        si = subprocess.STARTUPINFO()
-        si.dwFlags = subprocess.STARTF_USESHOWWINDOW
-        si.wShowWindow = win32con.SW_HIDE
-        subprocess.Popen([open_tablet_driver_path], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, startupinfo=si, creationflags=win32con.DETACHED_PROCESS)
+        
+        # Start OpenTabletDriver daemon without opening a console window
+        subprocess.Popen([open_tablet_daemon_path], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, startupinfo=subprocess.STARTUPINFO())
+        
+        # Start OpenTabletDriver without opening a console window
+        subprocess.Popen([open_tablet_driver_path], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, startupinfo=subprocess.STARTUPINFO())
 
         # Inform the user that they may need to restart the computer
         log_label.config(text="osu! mode activated. You may need to restart your computer for Wacom to work again.")
@@ -69,14 +63,14 @@ def enable_wacom_mode():
     try:
         # Stop OpenTabletDriver
         subprocess.run(["taskkill", "/F", "/IM", "OpenTabletDriver.UX.Wpf.exe"], shell=True, check=True)
-
+        
         # Start Wacom services/drivers
         for executable in wacom_executables:
             try:
                 subprocess.run([executable], shell=True, check=True)
             except subprocess.CalledProcessError:
                 pass
-
+        
         # Inform the user that they may need to restart the computer
         log_label.config(text="Wacom mode activated. You may need to restart your computer for osu! to work again.")
     except Exception as e:
