@@ -2,7 +2,9 @@
  Toggle between Osu! and drawing mode with Wacom drivers!
 
 
-# HOW IT WORKS
+# HOW TO SETUP
+
+Get the latest release from https://github.com/okisooo/osumode/releases
 
 - Open "osu! Mode.exe"
 - You will be prompted with multiple lines, these are the paths to your files.
