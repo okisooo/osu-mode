@@ -11,4 +11,4 @@ Get the latest release from https://github.com/okisooo/osumode/releases
 - Fill in the paths.
 - Once you've done that, make sure to update them using the button at the very bottom.
 
-You're all set! Start osu! Mode and get to playing!
+You're all set. Start osu! Mode and get to playing!
